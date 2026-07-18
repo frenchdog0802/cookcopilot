@@ -13,7 +13,7 @@ This repo has **four surfaces** and **one shared backend**. There is no root mon
 | Understand what exists and what's broken | [PROJECT_STATUS.md](./PROJECT_STATUS.md) |
 | See folder layout, APIs, and data model | [docs/Overall Project Structure.md](./docs/Overall%20Project%20Structure.md) |
 | Run the backend locally | [backend/README.md](./backend/README.md) |
-| Work on web UI / design tokens | [frontend/client/src/index.css](./frontend/client/src/index.css) + [design-system/lardermind/MASTER.md](./frontend/client/design-system/lardermind/MASTER.md) |
+| Work on web UI / design tokens | [frontend/src/index.css](./frontend/src/index.css) + [design-system/lardermind/MASTER.md](./frontend/design-system/lardermind/MASTER.md) |
 | Trace the AI chat feature | [docs/features/chat-langchain4j-tools.md](./docs/features/chat-langchain4j-tools.md) |
 
 ---
@@ -23,7 +23,7 @@ This repo has **four surfaces** and **one shared backend**. There is no root mon
 ```
 LarderMind/
 ├── backend/          Spring Boot API (Java 17, PostgreSQL, LangChain4j)
-├── frontend/client/  React + Vite web app
+├── frontend/         React + Vite web app
 ├── mobile/           React Native + Expo mobile app
 ├── landing/               Static marketing / waitlist page
 ├── docs/                      Architecture & feature docs
@@ -45,7 +45,7 @@ docker compose up --build
 - Web: `http://localhost:3000` (nginx proxies `/api` → backend)
 - API: `http://localhost:8080`
 
-Railway: deploy `backend/` and `frontend/client/` as two services (each has a `Dockerfile` + `railway.toml`). Set frontend build var `VITE_API_BASE_URL` to your backend public URL, and add that origin to backend `CORS_ALLOWED_ORIGINS`.
+Railway: deploy `backend/` and `frontend/` as two services (each has a `Dockerfile` + `railway.toml`). Set frontend build var `VITE_API_BASE_URL` to your backend public URL, and add that origin to backend `CORS_ALLOWED_ORIGINS`.
 
 ### Backend (port 8080)
 
@@ -60,7 +60,7 @@ Swagger UI: `http://localhost:8080/swagger-ui.html`
 ### Web app (port 5173)
 
 ```powershell
-cd frontend/client
+cd frontend
 npm install
 npm run dev
 ```
