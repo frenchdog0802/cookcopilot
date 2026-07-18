@@ -56,7 +56,7 @@
 
 | Controller | Base Path | Endpoints |
 |------------|-----------|-----------|
-| `AuthController` | `/api/auth` | signup, signin, signout, google-login, auth0 |
+| `AuthController` | `/api/auth` | signup, signin, signout, google-login |
 | `HealthController` | `/api` | health |
 | `RecipeController` | `/api/recipe` | CRUD |
 | `ShoppingListController` | `/api/shopping-list` | CRUD + bulk |
@@ -141,7 +141,7 @@ Static HTML/CSS — Warm Kitchen tokens aligned with web app. Waitlist form is c
 ### Key entities
 | Entity | Purpose |
 |--------|---------|
-| `User` | Auth (email, Google, Auth0) |
+| `User` | Auth (email, Google) |
 | `Recipe`, `Folder`, `RecipeIngredient` | Recipes |
 | `Ingredient` | Global ingredient catalog |
 | `PantryItem` | User pantry stock |

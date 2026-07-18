@@ -39,7 +39,7 @@ There is **no root monorepo config** — each subproject is largely self-contain
 | Language | Java 17 |
 | Framework | Spring Boot 3.4.3 |
 | Persistence | Spring Data JPA / Hibernate, PostgreSQL |
-| Security | Spring Security, JWT (JJWT 0.12.6), OAuth2 (Google), Auth0 token login |
+| Security | Spring Security, JWT (JJWT 0.12.6), Google OAuth login |
 | AI | LangChain4j 1.0.0 + `langchain4j-open-ai-spring-boot-starter` 1.0.0-beta5 → OpenAI Chat Completions |
 | Media | Cloudinary HTTP SDK 1.38.0 |
 | Payments (dep only) | Stripe Java 28.2.0 — in `pom.xml`, not used in source |
@@ -48,7 +48,7 @@ There is **no root monorepo config** — each subproject is largely self-contain
 | Build | Maven (`mvnw`) |
 | Tests | JUnit, Spring Boot Test, H2 in-memory (`application-test.yml`); Testcontainers declared but unused |
 
-**External APIs / services:** OpenAI, Cloudinary, Google OAuth, Auth0, Stripe (configured but unwired)
+**External APIs / services:** DeepSeek (OpenAI-compatible), Cloudinary, Google OAuth, Stripe (configured but unwired)
 
 ### Web Frontend (`frontend/client`)
 
@@ -72,7 +72,7 @@ There is **no root monorepo config** — each subproject is largely self-contain
 | Framework | React Native 0.81, Expo 54, React 19 |
 | Navigation | `@react-navigation` (stack + bottom tabs) |
 | Styling | NativeWind 4 (Tailwind for RN) |
-| Auth | Email/password JWT + Auth0 (`react-native-auth0`, `expo-auth-session`) |
+| Auth | Email/password JWT + Google OAuth |
 | Storage | `@react-native-async-storage/async-storage` |
 | Images | `expo-image-picker` (local URIs only — no Cloudinary upload wired) |
 | Payments (stub) | `react-native-iap` (mocked for Expo Go); `@stripe/stripe-react-native` (unused) |
@@ -96,7 +96,7 @@ Static HTML/CSS/JS — Warm Kitchen styling, aligned with web app tokens. Waitli
 
 ### Backend — Working
 
-- **Auth:** Email/password signup & signin, JWT issuance, Google OAuth2 redirect flow, Auth0 ID-token login, signout endpoint
+- **Auth:** Email/password signup & signin, JWT issuance, Google OAuth login, signout endpoint
 - **Core CRUD:** Recipes, folders, ingredients (with bulk insert + search), pantry items (bulk insert/update), shopping list (bulk insert), meal plans, users
 - **Meal planning logic:** Creating a meal plan compares recipe ingredients vs pantry and auto-adds shortfalls to the shopping list
 - **Shopping list ↔ pantry sync:** Checking/unchecking items updates pantry quantities via `has_been_added_to_pantry` flag
@@ -198,7 +198,7 @@ LarderMind/
 │           └── utils/                # imageHelper, recipeData (mock)
 │
 ├── mobile/
-│   ├── app.json                      # Expo config (Auth0, IAP plugins)
+│   ├── app.json                      # Expo config (IAP plugins)
 │   ├── eas.json                      # EAS build profiles
 │   ├── jest.config.js
 │   └── src/
@@ -225,7 +225,7 @@ LarderMind/
 
 | Controller | Base path | Endpoints |
 |------------|-----------|-----------|
-| `AuthController` | `/api/auth` | signup, signin, signout, google-login, auth0 |
+| `AuthController` | `/api/auth` | signup, signin, signout, google-login |
 | `HealthController` | `/api` | health |
 | `RecipeController` | `/api/recipe` | CRUD |
 | `FolderController` | `/api/folder` | CRUD |
@@ -384,7 +384,6 @@ flowchart TB
         CL[Cloudinary]
         OAI[OpenAI API]
         GAuth[Google OAuth]
-        A0[Auth0]
     end
 
     Web --> API
@@ -397,7 +396,6 @@ flowchart TB
     CHS --> PG
     SVC --> CL
     API --> GAuth
-    API --> A0
 ```
 
 ---
@@ -417,7 +415,7 @@ flowchart TB
 
 Required via `.env` or shell:
 
-`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, `FRONTEND_URL`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `OPENAI_API_KEY`, `OPENAI_MODEL`, `OPENAI_TEMPERATURE`, `OPENAI_MAX_TOKENS`, `AUTH0_DOMAIN`, `STRIPE_SECRET_KEY`, `CORS_ALLOWED_ORIGINS`, `PORT`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`
+`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, `FRONTEND_URL`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `DEEPSEEK_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL`, `LLM_TEMPERATURE`, `LLM_MAX_TOKENS`, `STRIPE_SECRET_KEY`, `CORS_ALLOWED_ORIGINS`, `PORT`
 
 Web: `VITE_API_BASE_URL` (optional; Vite dev proxy handles `/api` locally)
 
