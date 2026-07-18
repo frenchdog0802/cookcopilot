@@ -1,2 +1,5 @@
-﻿# Nested project repos: backend/, frontend/, mobile/
-
+﻿# Nested project repos (own GitHub remotes)
+backend/
+frontend/
+mobile/
+.cursor/
