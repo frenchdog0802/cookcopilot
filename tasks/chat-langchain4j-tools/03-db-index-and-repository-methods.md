@@ -13,9 +13,9 @@ Add the performance index on `ai_messages` and extend repositories for chat hist
 | Action | Path |
 |--------|------|
 | Modify | `backend/src/main/resources/schema.sql` (or migration script) |
-| Modify | `backend/src/main/java/com/CookCopilot/repository/AIMessageRepository.java` |
-| Modify | `backend/src/main/java/com/CookCopilot/repository/IngredientRepository.java` |
-| Modify | `backend/src/main/java/com/CookCopilot/repository/RecipeRepository.java` |
+| Modify | `backend/src/main/java/com/LarderMind/repository/AIMessageRepository.java` |
+| Modify | `backend/src/main/java/com/LarderMind/repository/IngredientRepository.java` |
+| Modify | `backend/src/main/java/com/LarderMind/repository/RecipeRepository.java` |
 
 ## Implementation
 

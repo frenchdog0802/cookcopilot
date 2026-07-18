@@ -12,7 +12,7 @@ Create `CookingTools` with the three existing menu-related `@Tool` methods, dele
 
 | Action | Path |
 |--------|------|
-| Create | `backend/src/main/java/com/CookCopilot/service/CookingTools.java` (partial; extended in 07–08) |
+| Create | `backend/src/main/java/com/LarderMind/service/CookingTools.java` (partial; extended in 07–08) |
 
 ## Implementation
 

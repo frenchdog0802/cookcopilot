@@ -12,8 +12,8 @@ Define the LangChain4j AI service interface and Spring configuration bean wiring
 
 | Action | Path |
 |--------|------|
-| Create | `backend/src/main/java/com/CookCopilot/service/ai/CookingAssistant.java` |
-| Create | `backend/src/main/java/com/CookCopilot/config/LangChain4jConfig.java` |
+| Create | `backend/src/main/java/com/LarderMind/service/ai/CookingAssistant.java` |
+| Create | `backend/src/main/java/com/LarderMind/config/LangChain4jConfig.java` |
 
 ## Implementation
 

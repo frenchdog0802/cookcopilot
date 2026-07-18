@@ -12,7 +12,7 @@ Keep the existing actions discovery endpoint but update the listed tool/action n
 
 | Action | Path |
 |--------|------|
-| Modify | `backend/src/main/java/com/CookCopilot/controller/ChatController.java` |
+| Modify | `backend/src/main/java/com/LarderMind/controller/ChatController.java` |
 
 ## Implementation
 

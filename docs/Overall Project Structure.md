@@ -5,7 +5,7 @@
 
 **LarderMind** is a full-stack meal-planning application (brand: LarderMind) with three client surfaces, one static landing page, and one shared Java backend.
 
-**Branding:** Web + landing = **LarderMind** (Warm Kitchen UI). Mobile = legacy **ManageEat** / orange (not yet aligned).
+**Branding:** All surfaces = **LarderMind**. Web + landing use Warm Kitchen UI; mobile still uses orange styling (visual alignment pending).
 
 ---
 
@@ -20,7 +20,7 @@
 
 **Key backend files:**
 - `backend/pom.xml` — Maven dependencies
-- `backend/src/main/java/com/cookcopilot/CookCopilotApplication.java` — entry point
+- `backend/src/main/java/com/lardermind/LarderMindApplication.java` — entry point
 - `backend/src/main/resources/application.yml` — config (PostgreSQL, OAuth, OpenAI, Stripe, Cloudinary)
 - `backend/schema.sql` — DB schema + mock seed data
 
@@ -29,7 +29,7 @@
 - `frontend/client/src/contexts/pantryContext.tsx` — central data/state layer
 - `frontend/client/src/api/` — REST client modules
 - `frontend/client/src/index.css` — Warm Kitchen design tokens
-- `frontend/client/design-system/cookcopilot/MASTER.md` — design spec
+- `frontend/client/design-system/lardermind/MASTER.md` — design spec
 
 **Note:** `frontend/README.md` is **outdated** — it describes Node.js/Express/MongoDB. Use root `README.md` instead.
 
@@ -119,7 +119,7 @@ Layout: `Sidebar` (desktop) + `BottomNav` (mobile).
 
 - **React Native 0.81** + **Expo 54** + **TypeScript**
 - Navigation: `@react-navigation` (stack + bottom tabs)
-- Styling: **NativeWind** — still legacy orange/ManageEat branding
+- Styling: **NativeWind** — orange palette (Warm Kitchen visual alignment pending); brand name is **LarderMind**
 - Mirrors web feature set with own `pantryContext` and API modules
 
 **Screens:** Home, Calendar, Pantry, Shopping, Recipes, Settings, AI Assistant, Subscription, Login, SignUp

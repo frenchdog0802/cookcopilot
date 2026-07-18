@@ -40,6 +40,8 @@ services:
       PORT: 8080
       FRONTEND_URL: http://localhost:3000
       CORS_ALLOWED_ORIGINS: http://localhost:3000,http://localhost
+      # Local compose has no hard memory limit; fixed heap keeps usage predictable
+      JAVA_OPTS: "-Xms128m -Xmx384m -XX:+ExitOnOutOfMemoryError -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8"
     depends_on:
       db:
         condition: service_healthy

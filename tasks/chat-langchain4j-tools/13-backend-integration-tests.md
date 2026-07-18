@@ -12,7 +12,7 @@ Add integration tests for chat send (text and tool paths) and history endpoint w
 
 | Action | Path |
 |--------|------|
-| Create | `backend/src/test/java/com/CookCopilot/integration/ChatIntegrationTest.java` |
+| Create | `backend/src/test/java/com/LarderMind/integration/ChatIntegrationTest.java` |
 
 ## Test cases
 

@@ -12,8 +12,8 @@ Replace OpenAI REST + JSON parsing with LangChain4j `CookingAssistant.chat()`. P
 
 | Action | Path |
 |--------|------|
-| Modify | `backend/src/main/java/com/CookCopilot/controller/ChatController.java` |
-| Modify | `backend/src/main/java/com/CookCopilot/dto/ChatSendRequest.java` (add `@Size(max=4000)` if missing) |
+| Modify | `backend/src/main/java/com/LarderMind/controller/ChatController.java` |
+| Modify | `backend/src/main/java/com/LarderMind/dto/ChatSendRequest.java` (add `@Size(max=4000)` if missing) |
 
 ## Implementation flow
 

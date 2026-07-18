@@ -12,10 +12,10 @@ Add focused unit tests for tools, request-scoped collector, chat history service
 
 | Action | Path |
 |--------|------|
-| Create | `backend/src/test/java/com/CookCopilot/service/CookingToolsTest.java` |
-| Create | `backend/src/test/java/com/CookCopilot/service/ToolResultCollectorTest.java` |
-| Create | `backend/src/test/java/com/CookCopilot/service/ChatHistoryServiceTest.java` |
-| Create | `backend/src/test/java/com/CookCopilot/controller/ChatControllerTest.java` |
+| Create | `backend/src/test/java/com/LarderMind/service/CookingToolsTest.java` |
+| Create | `backend/src/test/java/com/LarderMind/service/ToolResultCollectorTest.java` |
+| Create | `backend/src/test/java/com/LarderMind/service/ChatHistoryServiceTest.java` |
+| Create | `backend/src/test/java/com/LarderMind/controller/ChatControllerTest.java` |
 
 ## Test cases
 

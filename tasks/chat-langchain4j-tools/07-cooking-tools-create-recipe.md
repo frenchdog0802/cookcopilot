@@ -12,7 +12,7 @@ Add the `createRecipe` tool to `CookingTools`. Creates `Recipe` + `RecipeIngredi
 
 | Action | Path |
 |--------|------|
-| Modify | `backend/src/main/java/com/CookCopilot/service/CookingTools.java` |
+| Modify | `backend/src/main/java/com/LarderMind/service/CookingTools.java` |
 | Create (optional) | `IngredientInput` record in same file or `dto/` package |
 
 ## Implementation

@@ -12,8 +12,8 @@ Create request-scoped beans so tools read JWT-derived `userId` and write structu
 
 | Action | Path |
 |--------|------|
-| Create | `backend/src/main/java/com/CookCopilot/service/UserContext.java` |
-| Create | `backend/src/main/java/com/CookCopilot/service/ToolResultCollector.java` |
+| Create | `backend/src/main/java/com/LarderMind/service/UserContext.java` |
+| Create | `backend/src/main/java/com/LarderMind/service/ToolResultCollector.java` |
 
 ## Implementation
 

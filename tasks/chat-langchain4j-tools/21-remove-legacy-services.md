@@ -12,8 +12,8 @@ Delete hand-rolled OpenAI integration and manual action dispatch after parity te
 
 | Action | Path |
 |--------|------|
-| Delete | `backend/src/main/java/com/CookCopilot/service/OpenAIService.java` |
-| Delete | `backend/src/main/java/com/CookCopilot/service/ChatActionService.java` |
+| Delete | `backend/src/main/java/com/LarderMind/service/OpenAIService.java` |
+| Delete | `backend/src/main/java/com/LarderMind/service/ChatActionService.java` |
 | Modify | Any remaining imports/references |
 
 ## Pre-work

@@ -12,9 +12,9 @@ Add authenticated endpoint to load the last 50 chat messages for UI hydration on
 
 | Action | Path |
 |--------|------|
-| Modify | `backend/src/main/java/com/CookCopilot/controller/ChatController.java` |
-| Create | `backend/src/main/java/com/CookCopilot/dto/ChatHistoryResponse.java` (optional) |
-| Create | `backend/src/main/java/com/CookCopilot/dto/ChatHistoryMessageDto.java` (optional) |
+| Modify | `backend/src/main/java/com/LarderMind/controller/ChatController.java` |
+| Create | `backend/src/main/java/com/LarderMind/dto/ChatHistoryResponse.java` (optional) |
+| Create | `backend/src/main/java/com/LarderMind/dto/ChatHistoryMessageDto.java` (optional) |
 
 ## Implementation
 

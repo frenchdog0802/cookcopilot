@@ -15,7 +15,7 @@
 - Maintain a shopping list that syncs with pantry when items are checked off
 - Get AI-assisted cooking help that can list recipes, create recipes, add items to the shopping list, and add/remove recipes from the meal plan
 
-**Branding:** Web app and landing page use **LarderMind** with the Warm Kitchen design system. Mobile app still shows legacy **ManageEat** / orange styling (not yet aligned).
+**Branding:** All surfaces use **LarderMind**. Web and landing use the Warm Kitchen design system; mobile still uses orange styling (visual alignment pending).
 
 The project consists of **four surfaces** sharing one backend:
 
@@ -77,7 +77,7 @@ There is **no root monorepo config** — each subproject is largely self-contain
 | Images | `expo-image-picker` (local URIs only — no Cloudinary upload wired) |
 | Payments (stub) | `react-native-iap` (mocked for Expo Go); `@stripe/stripe-react-native` (unused) |
 | Tests | Jest 30 + jest-expo (auth API tests only) |
-| Build | EAS (`eas.json`), bundle ID `com.pantry.app` |
+| Build | EAS (`eas.json`), bundle ID `com.lardermind.app` |
 
 ### Landing Page (`landing`)
 
@@ -127,7 +127,7 @@ Nine active views switched via `currentView` state in `App.tsx`:
 
 Layout: `Sidebar` (desktop) + `BottomNav` (mobile). Auth via `authContext`; data via `pantryContext`.
 
-**Design system (Warm Kitchen):** Herb/linen palette, Fraunces + Source Sans 3. Tokens in `index.css` + `tailwind.config.js`. Master spec: `client/design-system/cookcopilot/MASTER.md`. Onboarding: root `README.md`.
+**Design system (Warm Kitchen):** Herb/linen palette, Fraunces + Source Sans 3. Tokens in `index.css` + `tailwind.config.js`. Master spec: `client/design-system/lardermind/MASTER.md`. Onboarding: root `README.md`.
 
 **Chat LangChain4j migration:** 22/23 tasks complete per `tasks/chat-langchain4j-tools/progress.md` — only manual regression QA remains.
 
@@ -152,14 +152,14 @@ Marketing page with hero, features, and a non-functional waitlist form. Visual s
 ## 4. File Structure
 
 ```
-CookCopilot/
+LarderMind/
 ├── backend/                 # Spring Boot API
 │   ├── pom.xml                       # Maven dependencies
 │   ├── schema.sql                    # DB schema + mock seed data
 │   ├── gen_dtos.py                   # Python script that generated Java DTOs
 │   ├── .env.example                  # Environment variable template
-│   └── src/main/java/com/cookcopilot/
-│       ├── CookCopilotApplication.java
+│   └── src/main/java/com/lardermind/
+│       ├── LarderMindApplication.java
 │       ├── controller/               # 11 REST controllers (see §3)
 │       ├── service/                  # Domain services + AI layer
 │       │   ├── ai/CookingAssistant.java    # LangChain4j @AiServices interface
@@ -187,7 +187,7 @@ CookCopilot/
 │       ├── vite.config.js            # Dev proxy → localhost:8080
 │       ├── playwright.config.ts      # E2e/a11y/visual test config
 │       ├── e2e/                      # Playwright tests + snapshots
-│       ├── design-system/cookcopilot/MASTER.md
+│       ├── design-system/lardermind/MASTER.md
 │       └── src/
 │           ├── App.tsx               # State-based view router
 │           ├── index.css             # Warm Kitchen tokens + component utilities
@@ -284,7 +284,7 @@ CookCopilot/
 | Facebook login stub | `Login.tsx` / `SignUp.tsx` — `console.log` only |
 | Forgot password non-functional | Link is `href="#"` |
 | Theme toggle cosmetic | Settings theme radio doesn't apply CSS changes |
-| Mobile UI not aligned | Web + landing use LarderMind Warm Kitchen; mobile still ManageEat/orange |
+| Mobile UI not aligned | Web + landing use LarderMind Warm Kitchen; mobile still orange styling |
 | `googleClientContext.tsx` unused | Not wrapped in app; OAuth uses backend redirect instead |
 | `@react-oauth/google` unused | In package.json but not imported |
 
@@ -300,7 +300,7 @@ CookCopilot/
 | Settings duplicate tab | Two "Theme" buttons both set `activeTab === 'appearance'` |
 | User settings TODO | `pantryContext.tsx:315` — no backend API for settings |
 | Folder delete TODO | `RecipeManagerScreen.tsx:266` — backend should move recipes to "Uncategorized" |
-| Branding split | Mobile uses ManageEat/orange; web + landing use LarderMind Warm Kitchen |
+| Branding / visual split | Brand is LarderMind everywhere; mobile still uses orange styling vs Warm Kitchen on web |
 | Minimal test coverage | Only 2 auth test files; no screen/component tests |
 
 ### Landing Page

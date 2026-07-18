@@ -12,7 +12,7 @@ Implement load/save of `AIMessage` rows and conversion to/from LangChain4j `Chat
 
 | Action | Path |
 |--------|------|
-| Create | `backend/src/main/java/com/CookCopilot/service/ChatHistoryService.java` |
+| Create | `backend/src/main/java/com/LarderMind/service/ChatHistoryService.java` |
 
 ## Implementation
 

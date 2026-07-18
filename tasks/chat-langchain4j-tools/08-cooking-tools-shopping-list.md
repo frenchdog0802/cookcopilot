@@ -12,7 +12,7 @@ Add `addItemsToShoppingList` tool: bulk-insert shopping list items for the curre
 
 | Action | Path |
 |--------|------|
-| Modify | `backend/src/main/java/com/CookCopilot/service/CookingTools.java` |
+| Modify | `backend/src/main/java/com/LarderMind/service/CookingTools.java` |
 | Create (optional) | `ShoppingItemInput` record |
 
 ## Implementation

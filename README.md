@@ -13,7 +13,7 @@ This repo has **four surfaces** and **one shared backend**. There is no root mon
 | Understand what exists and what's broken | [PROJECT_STATUS.md](./PROJECT_STATUS.md) |
 | See folder layout, APIs, and data model | [docs/Overall Project Structure.md](./docs/Overall%20Project%20Structure.md) |
 | Run the backend locally | [backend/README.md](./backend/README.md) |
-| Work on web UI / design tokens | [frontend/client/src/index.css](./frontend/client/src/index.css) + [design-system/cookcopilot/MASTER.md](./frontend/client/design-system/cookcopilot/MASTER.md) |
+| Work on web UI / design tokens | [frontend/client/src/index.css](./frontend/client/src/index.css) + [design-system/lardermind/MASTER.md](./frontend/client/design-system/lardermind/MASTER.md) |
 | Trace the AI chat feature | [docs/features/chat-langchain4j-tools.md](./docs/features/chat-langchain4j-tools.md) |
 
 ---
@@ -21,7 +21,7 @@ This repo has **four surfaces** and **one shared backend**. There is no root mon
 ## Repo map
 
 ```
-CookCopilot/
+LarderMind/
 ├── backend/          Spring Boot API (Java 17, PostgreSQL, LangChain4j)
 ├── frontend/client/  React + Vite web app
 ├── mobile/           React Native + Expo mobile app
@@ -118,7 +118,7 @@ Fonts: **Fraunces** (display) + **Source Sans 3** (body).
 Tailwind theme: `frontend/client/tailwind.config.js`  
 Shared CSS utilities: `frontend/client/src/index.css` (`.btn-primary`, `.input-field`, `.page-title`)
 
-**Note:** Mobile app (`mobile`) still uses the older ManageEat / orange styling — not yet aligned with Warm Kitchen.
+**Note:** Mobile app (`mobile`) still uses orange styling — not yet aligned with the Warm Kitchen visual system.
 
 ---
 

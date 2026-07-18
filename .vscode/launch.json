@@ -3,10 +3,10 @@
   "configurations": [
     {
       "type": "java",
-      "name": "CookCopilot Backend",
+      "name": "LarderMind Backend",
       "request": "launch",
-      "mainClass": "com.cookcopilot.CookCopilotApplication",
-      "projectName": "Cook-Copilot",
+      "mainClass": "com.lardermind.LarderMindApplication",
+      "projectName": "LarderMind",
       "cwd": "${workspaceFolder}/backend",
       "vmArgs": "-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8"
     }
