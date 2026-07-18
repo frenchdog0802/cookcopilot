@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookCopilot — AI Kitchen Assistant</title>
+    <meta name="description"
+        content="CookCopilot is your AI Kitchen Assistant — plans dinner from what's already in your kitchen and remembers your family's food preferences.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">CookCopilot</div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-image" aria-hidden="true">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1800&q=80"
+                alt="">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-inner">
+            <p class="brand">CookCopilot</p>
+            <h1>AI Kitchen Assistant</h1>
+            <p class="subheadline">The AI that remembers your family's tastes — so you never ask "what should I cook?" again.</p>
+            <div class="cta-group">
+                <a href="#join" class="btn-primary">Get your first meal plan free</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="pain-points">
+        <div class="section-header">
+            <h2>The "what's for dinner?" struggle is real</h2>
+            <p>It's not just cooking — it's the mental load of deciding, every single day.</p>
+        </div>
+        <ul class="pain-list">
+            <li>
+                <strong>Decision fatigue</strong>
+                <span>365 days of "what should I cook?" wears you down.</span>
+            </li>
+            <li>
+                <strong>Picky eaters</strong>
+                <span>Allergies, dislikes, and preferences — remembered once, applied forever.</span>
+            </li>
+            <li>
+                <strong>Budget pressure</strong>
+                <span>Meals that use what you have and keep costs down.</span>
+            </li>
+            <li>
+                <strong>Leftover guilt</strong>
+                <span>Ingredients in the fridge, planned into tonight's dinner.</span>
+            </li>
+        </ul>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>How CookCopilot works</h2>
+        </div>
+
+        <div class="feature-row">
+            <div class="feature-text">
+                <span class="feature-step">01</span>
+                <h3>Smart memory</h3>
+                <p>Tell CookCopilot once that your kid is allergic to peanuts or your partner dislikes spicy food. It remembers for every plan.</p>
+            </div>
+            <div class="feature-visual">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80"
+                    alt="Family cooking together in a warm kitchen">
+            </div>
+        </div>
+
+        <div class="feature-row reverse">
+            <div class="feature-text">
+                <span class="feature-step">02</span>
+                <h3>Cook with what you have</h3>
+                <p>Plans prioritize ingredients already in your pantry and fridge — especially what's about to expire.</p>
+            </div>
+            <div class="feature-visual">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
+                    alt="Fresh vegetables and ingredients on a counter">
+            </div>
+        </div>
+
+        <div class="feature-row">
+            <div class="feature-text">
+                <span class="feature-step">03</span>
+                <h3>Auto grocery list</h3>
+                <p>Only buy what you're missing. One sorted list, ready for your weekly shop.</p>
+            </div>
+            <div class="feature-visual">
+                <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=800&q=80"
+                    alt="Fresh produce at a market">
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="join">
+        <div class="cta-content">
+            <h2>Stop the dinner stress today</h2>
+            <p>Join the waitlist for early access to CookCopilot.</p>
+            <form class="signup-form"
+                onsubmit="event.preventDefault(); alert('Thanks for joining! We will notify you soon.');">
+                <input type="email" placeholder="Enter your email address" required aria-label="Email address">
+                <button type="submit" class="btn-primary">Join free beta</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">CookCopilot</div>
+            <ul class="footer-links">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy</a></li>
+            </ul>
+        </div>
+        <p class="copyright">&copy; 2026 CookCopilot. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

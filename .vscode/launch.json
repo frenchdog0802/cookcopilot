@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CookCopilot Backend",
+      "request": "launch",
+      "mainClass": "com.cookcopilot.CookCopilotApplication",
+      "projectName": "Cook-Copilot",
+      "cwd": "${workspaceFolder}/backend",
+      "vmArgs": "-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8"
+    }
+  ]
+}
