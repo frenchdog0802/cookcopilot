@@ -1,11 +1,11 @@
-# CookCopilot Codebase Summary
+﻿# LarderMind Codebase Summary
 
 > **Fast onboarding:** Start with [../README.md](../README.md), then [../PROJECT_STATUS.md](../PROJECT_STATUS.md) for gaps and next tasks.  
 > **Last updated:** 2026-07-17
 
-**CookCopilot** is a full-stack meal-planning application with three client surfaces, one static landing page, and one shared Java backend.
+**LarderMind** is a full-stack meal-planning application (brand: LarderMind) with three client surfaces, one static landing page, and one shared Java backend.
 
-**Branding:** Web + landing = **CookCopilot** (Warm Kitchen UI). Mobile = legacy **ManageEat** / orange (not yet aligned).
+**Branding:** Web + landing = **LarderMind** (Warm Kitchen UI). Mobile = legacy **ManageEat** / orange (not yet aligned).
 
 ---
 
@@ -20,7 +20,7 @@
 
 **Key backend files:**
 - `backend/pom.xml` — Maven dependencies
-- `backend/src/main/java/com/CookCopilot/CookCopilotApplication.java` — entry point
+- `backend/src/main/java/com/cookcopilot/CookCopilotApplication.java` — entry point
 - `backend/src/main/resources/application.yml` — config (PostgreSQL, OAuth, OpenAI, Stripe, Cloudinary)
 - `backend/schema.sql` — DB schema + mock seed data
 

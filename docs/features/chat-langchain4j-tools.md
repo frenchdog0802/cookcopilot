@@ -1,4 +1,4 @@
-# Feature: Chat – LangChain4j Migration + Tool Calls
+﻿# Feature: Chat – LangChain4j Migration + Tool Calls
 
 **Status:** Planning  
 **Scope:** Backend (Spring Boot) + Web Frontend (`AICookingAssistant.tsx`) + Mobile (`AICookingAssistantScreen.tsx`)
@@ -63,7 +63,7 @@ Define a single-method interface:
 ```java
 public interface CookingAssistant {
     @SystemMessage("""
-        You are an AI Cooking Assistant for CookCopilot.
+        You are an AI Cooking Assistant for LarderMind.
         ONLY answer questions about food, recipes, cooking, and ingredients.
         Refuse anything unrelated to food.
         When the user asks you to create a recipe, use the createRecipe tool.

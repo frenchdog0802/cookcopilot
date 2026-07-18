@@ -1,6 +1,6 @@
-# CookCopilot
+﻿# LarderMind
 
-**CookCopilot** is a full-stack meal-planning app: track pantry inventory, plan meals on a calendar, manage recipes, sync a shopping list, and get AI cooking help that remembers your family's preferences.
+**LarderMind** is a full-stack meal-planning app: track pantry inventory, plan meals on a calendar, manage recipes, sync a shopping list, and get AI cooking help that remembers your family's preferences.
 
 This repo has **four surfaces** and **one shared backend**. There is no root monorepo tooling — each folder runs independently.
 
@@ -35,6 +35,18 @@ CookCopilot/
 
 ## Quick run
 
+### Docker (frontend + backend + Postgres)
+
+```powershell
+# From repo root — fill backend/.env first (see backend/.env.example)
+docker compose up --build
+```
+
+- Web: `http://localhost:3000` (nginx proxies `/api` → backend)
+- API: `http://localhost:8080`
+
+Railway: deploy `backend/` and `frontend/client/` as two services (each has a `Dockerfile` + `railway.toml`). Set frontend build var `VITE_API_BASE_URL` to your backend public URL, and add that origin to backend `CORS_ALLOWED_ORIGINS`.
+
 ### Backend (port 8080)
 
 ```powershell
@@ -63,7 +75,7 @@ npm install
 npx expo start
 ```
 
-Set `EXPO_PUBLIC_API_BASE_URL` to your backend URL.
+Set `EXPO_PUBLIC_API_BASE_URL` to your backend URL (include `/api/` suffix).
 
 ### Landing page
 
@@ -87,7 +99,7 @@ Auth: email/password JWT, Google OAuth, Auth0. JWT stored in `localStorage` (web
 
 ## Brand & UI (web + landing)
 
-Product name: **CookCopilot** (web app and landing page).
+Product name: **LarderMind** (web app and landing page).
 
 Visual system — **Warm Kitchen**:
 

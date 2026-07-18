@@ -1,4 +1,4 @@
-# Technical Design: Chat – LangChain4j Migration + Tool Calls
+﻿# Technical Design: Chat – LangChain4j Migration + Tool Calls
 
 **Feature reference:** [chat-langchain4j-tools.md](../features/chat-langchain4j-tools.md)  
 **Status:** Design  
@@ -211,7 +211,7 @@ LangChain4j `MessageWindowChatMemory(maxMessages=20)` still caps in-process wind
 ```java
 public interface CookingAssistant {
     @SystemMessage("""
-        You are an AI Cooking Assistant for CookCopilot.
+        You are an AI Cooking Assistant for LarderMind.
         ONLY answer questions about food, recipes, cooking, and ingredients.
         Refuse anything unrelated to food.
         When the user asks you to create a recipe, use the createRecipe tool.

@@ -1,4 +1,4 @@
-# CookCopilot — Project Status
+﻿# LarderMind — Project Status
 
 **Last updated:** 2026-07-17  
 **Scope:** Based on direct inspection of the codebase in `d:\dev\CookCopilot`
@@ -7,7 +7,7 @@
 
 ## 1. Project Overview
 
-**CookCopilot** is a full-stack meal-planning application. It helps users:
+**LarderMind** is a full-stack meal-planning application. It helps users:
 
 - Track pantry inventory (quantities, units, ingredients)
 - Manage recipes with folders, images, and ingredient lists
@@ -15,7 +15,7 @@
 - Maintain a shopping list that syncs with pantry when items are checked off
 - Get AI-assisted cooking help that can list recipes, create recipes, add items to the shopping list, and add/remove recipes from the meal plan
 
-**Branding:** Web app and landing page use **CookCopilot** with the Warm Kitchen design system. Mobile app still shows legacy **ManageEat** / orange styling (not yet aligned).
+**Branding:** Web app and landing page use **LarderMind** with the Warm Kitchen design system. Mobile app still shows legacy **ManageEat** / orange styling (not yet aligned).
 
 The project consists of **four surfaces** sharing one backend:
 
@@ -87,8 +87,8 @@ Static HTML/CSS/JS — Warm Kitchen styling, aligned with web app tokens. Waitli
 
 | Workflow | Target |
 |----------|--------|
-| `frontend/.github/workflows/frontend-azure-swa.yml` | Azure Static Web Apps — npm ci, emoji lint, Playwright e2e, Vite build |
-| `frontend/.github/workflows/backend-azure-webapp.yml` | Azure Web App for backend |
+| `frontend/.github/workflows/frontend-azure-swa.yml` | (removed) was Azure SWA CI |
+| `frontend/.github/workflows/backend-azure-webapp.yml` | (removed) was Azure Web App CI |
 
 ---
 
@@ -158,7 +158,7 @@ CookCopilot/
 │   ├── schema.sql                    # DB schema + mock seed data
 │   ├── gen_dtos.py                   # Python script that generated Java DTOs
 │   ├── .env.example                  # Environment variable template
-│   └── src/main/java/com/CookCopilot/
+│   └── src/main/java/com/cookcopilot/
 │       ├── CookCopilotApplication.java
 │       ├── controller/               # 11 REST controllers (see §3)
 │       ├── service/                  # Domain services + AI layer
@@ -179,7 +179,7 @@ CookCopilot/
 │
 ├── frontend/
 │   ├── README.md                     # ⚠ Outdated (describes Node/MongoDB stack)
-│   ├── .github/workflows/            # Azure CI for frontend + backend
+│   ├── .github/workflows/            # (Azure CI removed; use Docker / Railway)
 │   ├── docs/                         # Design/feature docs
 │   ├── tasks/                        # Design-system task tracker
 │   └── client/                       # React web app
@@ -284,7 +284,7 @@ CookCopilot/
 | Facebook login stub | `Login.tsx` / `SignUp.tsx` — `console.log` only |
 | Forgot password non-functional | Link is `href="#"` |
 | Theme toggle cosmetic | Settings theme radio doesn't apply CSS changes |
-| Mobile UI not aligned | Web + landing use CookCopilot Warm Kitchen; mobile still ManageEat/orange |
+| Mobile UI not aligned | Web + landing use LarderMind Warm Kitchen; mobile still ManageEat/orange |
 | `googleClientContext.tsx` unused | Not wrapped in app; OAuth uses backend redirect instead |
 | `@react-oauth/google` unused | In package.json but not imported |
 
@@ -300,7 +300,7 @@ CookCopilot/
 | Settings duplicate tab | Two "Theme" buttons both set `activeTab === 'appearance'` |
 | User settings TODO | `pantryContext.tsx:315` — no backend API for settings |
 | Folder delete TODO | `RecipeManagerScreen.tsx:266` — backend should move recipes to "Uncategorized" |
-| Branding split | Mobile uses ManageEat/orange; web + landing use CookCopilot Warm Kitchen |
+| Branding split | Mobile uses ManageEat/orange; web + landing use LarderMind Warm Kitchen |
 | Minimal test coverage | Only 2 auth test files; no screen/component tests |
 
 ### Landing Page
@@ -327,7 +327,7 @@ Prioritized based on gaps visible in the code and existing task trackers.
 ### High Priority — Complete In-Progress Work
 
 1. **Manual regression QA for chat LangChain4j migration** (`tasks/chat-langchain4j-tools/23-regression-verification.md`) — verify send/history/tools on web and mobile in a running environment; confirm rollback path
-2. **Align mobile UI with Warm Kitchen** — mirror web tokens and CookCopilot branding on `mobile`
+2. **Align mobile UI with Warm Kitchen** — mirror web tokens and LarderMind branding on `mobile`
 3. **Manual QA for Warm Kitchen UI** — all web views + landing at 375/768/1024 widths
 
 ### High Priority — Fix Broken / Incomplete Features
