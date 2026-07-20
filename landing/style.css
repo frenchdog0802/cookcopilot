@@ -61,6 +61,15 @@ ul {
     color: var(--ink);
 }
 
+.nav-link {
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+.nav-link:hover {
+    color: var(--ink);
+}
+
 /* Hero — full-bleed image, brand-first */
 .hero {
     position: relative;
@@ -322,6 +331,88 @@ ul {
     color: var(--muted);
 }
 
+/* Pricing */
+.pricing {
+    padding: 5rem 5%;
+    border-top: 1px solid var(--line);
+}
+
+.pricing-trial {
+    margin-top: 0.75rem;
+    color: var(--herb);
+    font-size: 0.95rem;
+}
+
+.pricing-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.pricing-card {
+    border: 1px solid var(--line);
+    background: var(--linen);
+    padding: 2rem;
+}
+
+.pricing-card-pro {
+    border-color: var(--herb);
+    background: rgba(216, 224, 208, 0.35);
+}
+
+.pricing-tier {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.pricing-card-pro .pricing-tier {
+    color: var(--herb);
+}
+
+.pricing-price {
+    margin-top: 0.75rem;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.pricing-period {
+    margin-top: 0.25rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.pricing-list {
+    margin-top: 1.5rem;
+}
+
+.pricing-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.95rem;
+}
+
+.pricing-list li:last-child {
+    border-bottom: none;
+}
+
+.pricing-list span {
+    color: var(--muted);
+}
+
+.pricing-cta {
+    display: block;
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
 /* Footer */
 footer {
     padding: 3rem 5%;
@@ -385,9 +476,14 @@ footer {
 
     .pain-points,
     .features,
+    .pricing,
     .cta-section {
         padding-left: 8%;
         padding-right: 8%;
+    }
+
+    .pricing-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .feature-row {
