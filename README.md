@@ -2,7 +2,7 @@
 
 **LarderMind** is a full-stack meal-planning app: track pantry inventory, plan meals on a calendar, manage recipes, sync a shopping list, and get AI cooking help that remembers your family's preferences.
 
-This repo has **four surfaces** and **one shared backend**. There is no root monorepo tooling — each folder runs independently.
+This repo has **four surfaces** and **two backends in parallel** (Spring primary; Nest Wave 1 migrating). There is no root monorepo tooling — each folder runs independently.
 
 ---
 
@@ -12,7 +12,8 @@ This repo has **four surfaces** and **one shared backend**. There is no root mon
 |-----------------|-----------|
 | Understand what exists and what's broken | [PROJECT_STATUS.md](./PROJECT_STATUS.md) |
 | See folder layout, APIs, and data model | [docs/Overall Project Structure.md](./docs/Overall%20Project%20Structure.md) |
-| Run the backend locally | [backend/README.md](./backend/README.md) |
+| Run the Spring backend locally | [backend/README.md](./backend/README.md) |
+| Run the Nest backend (parallel Wave 1) | [backend-node/README.md](./backend-node/README.md) |
 | Work on web UI / design tokens | [frontend/src/index.css](./frontend/src/index.css) + [design-system/lardermind/MASTER.md](./frontend/design-system/lardermind/MASTER.md) |
 | Trace the AI chat feature | [docs/features/chat-langchain4j-tools.md](./docs/features/chat-langchain4j-tools.md) |
 
@@ -22,7 +23,8 @@ This repo has **four surfaces** and **one shared backend**. There is no root mon
 
 ```
 LarderMind/
-├── backend/          Spring Boot API (Java 17, PostgreSQL, LangChain4j)
+├── backend/          Spring Boot API (Java 17, PostgreSQL, LangChain4j) — primary
+├── backend-node/     NestJS + Prisma API (Wave 1 parallel; default :8090)
 ├── frontend/         React + Vite web app
 ├── mobile/           React Native + Expo mobile app
 ├── landing/               Static marketing / waitlist page
@@ -46,6 +48,19 @@ docker compose up --build
 - API: `http://localhost:8080`
 
 Railway: deploy `backend/` and `frontend/` as two services (each has a `Dockerfile` + `railway.toml`). Set frontend build var `VITE_API_BASE_URL` to your backend public URL, and add that origin to backend `CORS_ALLOWED_ORIGINS`.
+
+### Backend Node (port 8090, parallel)
+
+```powershell
+cd backend-node
+# Copy .env.example → .env (same DB/JWT names as Spring; PORT=8090)
+npm install
+npm run prisma:generate
+npm run dev
+```
+
+Point web at Node: `VITE_API_BASE_URL=http://localhost:8090`.  
+Meal confirm/skip, chat, upload, and subscription still require Spring until later waves.
 
 ### Backend (port 8080)
 

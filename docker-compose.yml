@@ -5,6 +5,11 @@
 #
 # Railway: deploy `backend/` and `frontend/` as separate services from their Dockerfiles.
 # Set backend env vars in Railway; for frontend set build arg VITE_API_BASE_URL to the backend public URL.
+#
+# Parallel Nest API (Wave 1): run `backend-node/` separately on PORT=8090 against the same Postgres.
+# Do not replace the Spring `backend` service below until Nest Wave 1+ QA is green.
+#   cd backend-node && npm run dev
+#   VITE_API_BASE_URL=http://localhost:8090
 
 services:
   db:

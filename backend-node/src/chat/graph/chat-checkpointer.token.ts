@@ -1,0 +1,1 @@
+export const CHAT_CHECKPOINTER = Symbol('CHAT_CHECKPOINTER');
