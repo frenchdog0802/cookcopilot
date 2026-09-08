@@ -10,6 +10,30 @@ import { CHAT_CHECKPOINTER } from './chat-checkpointer.token';
 
 const logger = new Logger('ChatCheckpointer');
 
+/**
+ * node-pg v8+ treats sslmode=require as verify-full, which fails on Supabase's
+ * chain. Strip sslmode from the URL and pass explicit ssl so we can connect.
+ */
+function buildCheckpointerPool(app: AppConfig): Pool {
+  const rawUrl = buildDatabaseUrl(app.database);
+  const url = new URL(rawUrl);
+  url.searchParams.delete('sslmode');
+  // Keep pooler hint; drop sslmode so Pool.ssl controls TLS.
+  const connectionString = url.toString();
+  const sslEnabled = app.database.sslMode.toLowerCase() !== 'disable';
+
+  return new Pool({
+    connectionString,
+    ...(sslEnabled
+      ? {
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        }
+      : {}),
+  });
+}
+
 export const chatCheckpointerProvider = {
   provide: CHAT_CHECKPOINTER,
   inject: [ConfigService],
@@ -22,15 +46,7 @@ export const chatCheckpointerProvider = {
       return new MemorySaver();
     }
 
-    const connString = buildDatabaseUrl(app.database);
-    // Supabase / managed Postgres often present a chain that node-pg treats as
-    // self-signed when sslmode=require is aliased to verify-full.
-    const sslEnabled = app.database.sslMode.toLowerCase() !== 'disable';
-    const pool = new Pool({
-      connectionString: connString,
-      ...(sslEnabled ? { ssl: { rejectUnauthorized: false } } : {}),
-    });
-
+    const pool = buildCheckpointerPool(app);
     const saver = new PostgresSaver(pool);
     await saver.setup();
     logger.log('PostgresSaver checkpointer ready');
