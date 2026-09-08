@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { MemorySaver } from '@langchain/langgraph';
 import type { BaseCheckpointSaver } from '@langchain/langgraph-checkpoint';
 import { PostgresSaver } from '@langchain/langgraph-checkpoint-postgres';
+import { Pool } from 'pg';
 import type { AppConfig } from '../../config/env.schema';
 import { buildDatabaseUrl } from '../../prisma/database-url';
 import { CHAT_CHECKPOINTER } from './chat-checkpointer.token';
@@ -22,7 +23,15 @@ export const chatCheckpointerProvider = {
     }
 
     const connString = buildDatabaseUrl(app.database);
-    const saver = PostgresSaver.fromConnString(connString);
+    // Supabase / managed Postgres often present a chain that node-pg treats as
+    // self-signed when sslmode=require is aliased to verify-full.
+    const sslEnabled = app.database.sslMode.toLowerCase() !== 'disable';
+    const pool = new Pool({
+      connectionString: connString,
+      ...(sslEnabled ? { ssl: { rejectUnauthorized: false } } : {}),
+    });
+
+    const saver = new PostgresSaver(pool);
     await saver.setup();
     logger.log('PostgresSaver checkpointer ready');
     return saver;
