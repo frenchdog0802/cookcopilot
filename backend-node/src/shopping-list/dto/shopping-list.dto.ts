@@ -54,11 +54,15 @@ export class BulkShoppingListItemsRequestDto {
 
 export type ShoppingListItemDto = {
   id: string;
+  name: string;
   ingredient_id: string;
   quantity: number | null;
   unit: string | null;
   checked: boolean;
   has_been_added_to_pantry: boolean;
+  unit_kind: string | null;
+  base_unit: string | null;
+  default_display_unit: string | null;
   created_at: number | null;
   updated_at: number | null;
 };

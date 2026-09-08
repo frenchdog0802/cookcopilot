@@ -3,6 +3,12 @@ import type { Ingredient, ShoppingListItem } from '@prisma/client';
 import { NotFoundError } from '../common/errors/http-errors';
 import { bigintToNumber } from '../common/mappers/user.mapper';
 import { nowUnixSeconds } from '../common/time';
+import {
+  resolveBaseUnit,
+  resolveDisplayUnit,
+  resolveKind,
+} from '../common/unit/unit-converter';
+import { unitKindToApiValue } from '../common/unit/unit-kind';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   BulkShoppingListItemsRequestDto,
@@ -10,6 +16,10 @@ import {
   UpdateShoppingListItemRequestDto,
   type ShoppingListItemDto,
 } from './dto/shopping-list.dto';
+
+type ShoppingListItemWithIngredient = ShoppingListItem & {
+  ingredient: Ingredient;
+};
 
 @Injectable()
 export class ShoppingListService {
@@ -19,6 +29,7 @@ export class ShoppingListService {
     const items = await this.prisma.shoppingListItem.findMany({
       where: { userId },
       orderBy: { createdAt: 'desc' },
+      include: { ingredient: true },
     });
     return items.map((item) => this.toDto(item));
   }
@@ -26,6 +37,7 @@ export class ShoppingListService {
   async getItem(userId: string, id: string): Promise<ShoppingListItemDto> {
     const item = await this.prisma.shoppingListItem.findFirst({
       where: { id, userId },
+      include: { ingredient: true },
     });
     if (!item) {
       throw new NotFoundError('Shopping list item not found');
@@ -52,6 +64,7 @@ export class ShoppingListService {
         createdAt: now,
         updatedAt: now,
       },
+      include: { ingredient: true },
     });
     return this.toDto(item);
   }
@@ -74,6 +87,7 @@ export class ShoppingListService {
   ): Promise<ShoppingListItemDto> {
     const existing = await this.prisma.shoppingListItem.findFirst({
       where: { id, userId },
+      include: { ingredient: true },
     });
     if (!existing) {
       throw new NotFoundError('Shopping list item not found');
@@ -87,6 +101,7 @@ export class ShoppingListService {
         checked: dto.checked ?? existing.checked,
         updatedAt: BigInt(nowUnixSeconds()),
       },
+      include: { ingredient: true },
     });
     return this.toDto(item);
   }
@@ -161,14 +176,23 @@ export class ShoppingListService {
     });
   }
 
-  private toDto(item: ShoppingListItem): ShoppingListItemDto {
+  private toDto(item: ShoppingListItemWithIngredient): ShoppingListItemDto {
+    const ingredient = item.ingredient;
     return {
       id: item.id,
+      name: ingredient?.name ?? 'Unknown',
       ingredient_id: item.ingredientId,
       quantity: item.quantity,
       unit: item.unit,
       checked: item.checked,
       has_been_added_to_pantry: item.hasBeenAddedToPantry,
+      unit_kind: ingredient
+        ? unitKindToApiValue(resolveKind(ingredient))
+        : null,
+      base_unit: ingredient ? resolveBaseUnit(ingredient) : null,
+      default_display_unit: ingredient
+        ? resolveDisplayUnit(ingredient)
+        : null,
       created_at: bigintToNumber(item.createdAt),
       updated_at: bigintToNumber(item.updatedAt),
     };
