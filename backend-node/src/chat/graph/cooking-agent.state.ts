@@ -46,6 +46,16 @@ export const CookingAgentState = Annotation.Root({
     reducer: (_left, right) => right,
     default: () => undefined,
   }),
+  /** Completed agent→tools cycles in the current user turn. */
+  toolRoundCount: Annotation<number>({
+    reducer: (_left, right) => right,
+    default: () => 0,
+  }),
+  /** When true, agent must produce text only (no more tool calls). */
+  forceFinalize: Annotation<boolean>({
+    reducer: (_left, right) => right,
+    default: () => false,
+  }),
 });
 
 export type CookingAgentStateType = typeof CookingAgentState.State;

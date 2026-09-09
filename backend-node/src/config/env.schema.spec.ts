@@ -49,6 +49,7 @@ describe('env schema', () => {
     ).toBe(60 * 60 * 24 * 30);
     const app = toAppConfig(parseEnv(validRaw));
     expect(app.optional.chatRecursionLimit).toBe(12);
+    expect(app.optional.chatTurnToolRounds).toBe(3);
     expect(typeof app.optional.chatHitlEnabled).toBe('boolean');
   });
 
@@ -59,10 +60,12 @@ describe('env schema', () => {
         CHAT_HITL_ENABLED: 'false',
         CHAT_USE_MEMORY_CHECKPOINTER: 'true',
         CHAT_RECURSION_LIMIT: '8',
+        CHAT_TURN_TOOL_ROUNDS: '4',
       }),
     );
     expect(app.optional.chatHitlEnabled).toBe(false);
     expect(app.optional.chatUseMemoryCheckpointer).toBe(true);
     expect(app.optional.chatRecursionLimit).toBe(8);
+    expect(app.optional.chatTurnToolRounds).toBe(4);
   });
 });

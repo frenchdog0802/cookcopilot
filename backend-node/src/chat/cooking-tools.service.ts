@@ -225,7 +225,7 @@ householdNotes captures family member preferences. measurementUnit is metric or 
       ),
       this.tool(
         'suggestMealsFromPantry',
-        'Suggest meals the user can cook based on pantry inventory and saved recipes',
+        'Score saved recipes against pantry ingredients and return the best matches. Call this before inventing a menu when the user asks to plan or suggest meals from what they have.',
         z.object({
           scheduleTopMatches: z.boolean().optional(),
           maxSuggestions: z.number().optional(),
@@ -973,13 +973,18 @@ householdNotes captures family member preferences. measurementUnit is metric or 
       return 'No saved recipes to suggest from. Create or import recipes first.';
     }
 
-    const pantryByName = new Map<string, number>();
+    if (pantry.length === 0) {
+      return 'Pantry is empty. Ask the user to add pantry items (or import a recipe) — keep the reply to one short status and one next step.';
+    }
+
+    // Presence-based match: quantity is often 0 for AI-created recipes / pantry
+    // "I have some" entries, so requiring available >= needed && needed > 0
+    // produced all-zero scores and ignored the pantry.
+    const pantryIngredientIds = new Set<string>();
+    const pantryNames = new Set<string>();
     for (const item of pantry) {
-      const key = item.ingredient.name.toLowerCase();
-      pantryByName.set(
-        key,
-        (pantryByName.get(key) ?? 0) + (item.quantity ?? 0),
-      );
+      pantryIngredientIds.add(item.ingredientId);
+      pantryNames.add(item.ingredient.name.toLowerCase());
     }
 
     const limit =
@@ -1000,17 +1005,17 @@ householdNotes captures family member preferences. measurementUnit is metric or 
       let matched = 0;
       const missing: string[] = [];
       for (const row of ingredients) {
-        const available =
-          pantryByName.get(row.ingredient.name.toLowerCase()) ?? 0;
-        const needed = row.quantity ?? 0;
-        if (available >= needed && needed > 0) {
+        const inPantry =
+          pantryIngredientIds.has(row.ingredientId) ||
+          pantryNames.has(row.ingredient.name.toLowerCase());
+        if (inPantry) {
           matched += 1;
-        } else if (available <= 0) {
+        } else {
           missing.push(row.ingredient.name);
         }
       }
 
-      const score = ingredients.length === 0 ? 0 : matched / ingredients.length;
+      const score = matched / ingredients.length;
       suggestions.push({
         recipeId: recipe.id,
         recipeName: recipe.mealName,
@@ -1020,9 +1025,10 @@ householdNotes captures family member preferences. measurementUnit is metric or 
     }
 
     suggestions.sort((a, b) => Number(b.matchScore) - Number(a.matchScore));
-    const top = suggestions.slice(0, limit);
+    const usable = suggestions.filter((s) => Number(s.matchScore) > 0);
+    const top = (usable.length > 0 ? usable : []).slice(0, limit);
     if (top.length === 0) {
-      return 'No recipe suggestions available.';
+      return 'No usable pantry matches (all scores 0%). Ask the user to add real pantry items or import a recipe — one short status and one next step only.';
     }
 
     const scheduled: Array<Record<string, unknown>> = [];

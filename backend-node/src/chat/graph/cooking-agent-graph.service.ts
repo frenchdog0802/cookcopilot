@@ -21,8 +21,10 @@ import {
 import type { BaseCheckpointSaver } from '@langchain/langgraph-checkpoint';
 import type { AppConfig } from '../../config/env.schema';
 import {
+  AGENT_THINKING_STATUS,
   COOKING_ASSISTANT_SYSTEM_PROMPT,
   statusMessageForTool,
+  TURN_BUDGET_STOP_NOTE,
 } from '../chat.constants';
 import { CookingToolsService } from '../cooking-tools.service';
 import { CHAT_CHECKPOINTER } from './chat-checkpointer.token';
@@ -50,9 +52,19 @@ export type GraphTurnResult = {
   pendingTools: PendingToolSummary[];
 };
 
+type CookingRunLocal = {
+  callbacks: GraphStreamCallbacks;
+  tools: StructuredToolInterface[];
+  hitlEnabled: boolean;
+  turnToolRounds: number;
+};
+
 type CompiledCookingGraph = ReturnType<
   CookingAgentGraphService['compileGraph']
 >;
+
+const BUDGET_FALLBACK_TEXT =
+  'I made some progress on that. Say continue and I will do the next batch.';
 
 @Injectable()
 export class CookingAgentGraphService implements OnModuleInit {
@@ -60,6 +72,7 @@ export class CookingAgentGraphService implements OnModuleInit {
   private graph!: CompiledCookingGraph;
   private hitlEnabled = true;
   private recursionLimit = 12;
+  private turnToolRounds = 3;
 
   constructor(
     private readonly configService: ConfigService,
@@ -72,6 +85,7 @@ export class CookingAgentGraphService implements OnModuleInit {
     const app = this.configService.get<AppConfig>('app')!;
     this.hitlEnabled = app.optional.chatHitlEnabled;
     this.recursionLimit = app.optional.chatRecursionLimit;
+    this.turnToolRounds = app.optional.chatTurnToolRounds;
     this.graph = this.compileGraph();
   }
 
@@ -96,6 +110,8 @@ export class CookingAgentGraphService implements OnModuleInit {
       finalText: '',
       pendingApprovals: [],
       hitlDecision: undefined,
+      toolRoundCount: 0,
+      forceFinalize: false,
     };
 
     return this.execute(input, config, params.callbacks, params.userId);
@@ -149,10 +165,11 @@ export class CookingAgentGraphService implements OnModuleInit {
     userId: string,
   ): Promise<GraphTurnResult> {
     // Attach callbacks via closure used inside nodes (per-request tools + status).
-    const runLocal = {
+    const runLocal: CookingRunLocal = {
       callbacks,
       tools: this.cookingToolsService.buildTools(userId),
       hitlEnabled: this.hitlEnabled,
+      turnToolRounds: this.turnToolRounds,
     };
 
     // Command resume typing is stricter than Partial state; cast at the boundary.
@@ -295,11 +312,7 @@ export class CookingAgentGraphService implements OnModuleInit {
     config: { configurable?: Record<string, unknown> },
   ) {
     const run = config.configurable?.__cookingRun as
-      | {
-          callbacks: GraphStreamCallbacks;
-          tools: StructuredToolInterface[];
-          hitlEnabled: boolean;
-        }
+      | CookingRunLocal
       | undefined;
 
     const tools =
@@ -308,27 +321,48 @@ export class CookingAgentGraphService implements OnModuleInit {
       onToken: () => undefined,
       onToolStatus: () => undefined,
     };
+    const turnToolRounds = run?.turnToolRounds ?? this.turnToolRounds;
+    const forceFinalize =
+      state.forceFinalize || state.toolRoundCount >= turnToolRounds;
+
+    callbacks.onToolStatus('agent', AGENT_THINKING_STATUS);
 
     const modelMessages: BaseMessage[] = [
       new SystemMessage(COOKING_ASSISTANT_SYSTEM_PROMPT),
       ...state.messages.filter((m) => m._getType() !== 'system'),
     ];
+    if (forceFinalize) {
+      modelMessages.push(new SystemMessage(TURN_BUDGET_STOP_NOTE));
+    }
 
     const { responseText, toolCalls } = await this.invokeModel(
       modelMessages,
-      tools,
+      forceFinalize ? [] : tools,
       callbacks,
     );
 
+    const effectiveToolCalls = forceFinalize ? [] : toolCalls;
+    const text =
+      responseText.trim().length > 0
+        ? responseText
+        : forceFinalize
+          ? BUDGET_FALLBACK_TEXT
+          : responseText;
+
+    if (forceFinalize && responseText.trim().length === 0 && text) {
+      callbacks.onToken(text);
+    }
+
     const aiMessage = new AIMessage({
-      content: responseText,
-      tool_calls: toolCalls,
+      content: text,
+      tool_calls: effectiveToolCalls,
     });
 
     return {
       messages: [aiMessage],
-      finalText: toolCalls.length === 0 ? responseText : state.finalText,
+      finalText: effectiveToolCalls.length === 0 ? text : state.finalText,
       pendingApprovals: [],
+      forceFinalize,
     };
   }
 
@@ -337,7 +371,8 @@ export class CookingAgentGraphService implements OnModuleInit {
     config: { configurable?: Record<string, unknown> },
   ) {
     const run = config.configurable?.__cookingRun as
-      { hitlEnabled: boolean } | undefined;
+      | CookingRunLocal
+      | undefined;
     const hitlEnabled = run?.hitlEnabled ?? this.hitlEnabled;
 
     const last = state.messages[state.messages.length - 1];
@@ -373,10 +408,7 @@ export class CookingAgentGraphService implements OnModuleInit {
     config: { configurable?: Record<string, unknown> },
   ) {
     const run = config.configurable?.__cookingRun as
-      | {
-          callbacks: GraphStreamCallbacks;
-          tools: StructuredToolInterface[];
-        }
+      | CookingRunLocal
       | undefined;
     const tools =
       run?.tools ?? this.cookingToolsService.buildTools(state.userId);
@@ -385,6 +417,7 @@ export class CookingAgentGraphService implements OnModuleInit {
       onToken: () => undefined,
       onToolStatus: () => undefined,
     };
+    const turnToolRounds = run?.turnToolRounds ?? this.turnToolRounds;
 
     const last = state.messages[state.messages.length - 1];
     const toolCalls =
@@ -452,19 +485,27 @@ export class CookingAgentGraphService implements OnModuleInit {
       );
     }
 
+    const nextRound = state.toolRoundCount + 1;
     return {
       messages: toolMessages,
       hitlDecision: undefined,
       pendingApprovals: [],
+      toolRoundCount: nextRound,
+      forceFinalize: nextRound >= turnToolRounds,
     };
   }
 
   private finalizeNode(state: CookingAgentStateType) {
     const text = this.extractLastAiText(state.messages);
-    return { finalText: text || state.finalText };
+    return {
+      finalText: text || state.finalText || BUDGET_FALLBACK_TEXT,
+    };
   }
 
   private routeAfterAgent(state: CookingAgentStateType) {
+    if (state.forceFinalize) {
+      return 'finalize';
+    }
     const last = state.messages[state.messages.length - 1];
     const toolCalls =
       last && last._getType() === 'ai'
@@ -498,7 +539,8 @@ export class CookingAgentGraphService implements OnModuleInit {
     responseText: string;
     toolCalls: NonNullable<AIMessage['tool_calls']>;
   }> {
-    const model = this.createModel(true).bindTools(tools);
+    const base = this.createModel(true);
+    const model = tools.length > 0 ? base.bindTools(tools) : base;
     const stream = await model.stream(messages);
 
     let responseText = '';

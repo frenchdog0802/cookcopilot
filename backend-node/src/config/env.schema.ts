@@ -95,6 +95,10 @@ export const envSchema = z.object({
     emptyToUndefined,
     z.coerce.number().int().positive().optional(),
   ),
+  CHAT_TURN_TOOL_ROUNDS: z.preprocess(
+    emptyToUndefined,
+    z.coerce.number().int().positive().optional(),
+  ),
   CHAT_USE_MEMORY_CHECKPOINTER: z.preprocess((value) => {
     if (value === '' || value === undefined) return undefined;
     if (typeof value === 'boolean') return value;
@@ -147,6 +151,7 @@ export type AppConfig = {
     socialImportBaseUrl?: string;
     chatHitlEnabled: boolean;
     chatRecursionLimit: number;
+    chatTurnToolRounds: number;
     chatUseMemoryCheckpointer: boolean;
   };
 };
@@ -210,6 +215,7 @@ export function toAppConfig(env: EnvVars): AppConfig {
       socialImportBaseUrl: env.SOCIAL_IMPORT_BASE_URL,
       chatHitlEnabled: env.CHAT_HITL_ENABLED ?? env.NODE_ENV !== 'test',
       chatRecursionLimit: env.CHAT_RECURSION_LIMIT ?? 12,
+      chatTurnToolRounds: env.CHAT_TURN_TOOL_ROUNDS ?? 3,
       chatUseMemoryCheckpointer:
         env.CHAT_USE_MEMORY_CHECKPOINTER ?? env.NODE_ENV === 'test',
     },
