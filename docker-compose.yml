@@ -1,15 +1,10 @@
-# Local full stack: frontend (nginx) + backend + Postgres
+# Local full stack: frontend (nginx) + Nest API + Postgres
 # Usage:
-#   cp backend/.env.example backend/.env   # fill secrets
+#   cp backend-node/.env.example backend-node/.env   # fill secrets
 #   docker compose up --build
 #
-# Railway: deploy `backend/` and `frontend/` as separate services from their Dockerfiles.
-# Set backend env vars in Railway; for frontend set build arg VITE_API_BASE_URL to the backend public URL.
-#
-# Parallel Nest API (Wave 1): run `backend-node/` separately on PORT=8090 against the same Postgres.
-# Do not replace the Spring `backend` service below until Nest Wave 1+ QA is green.
-#   cd backend-node && npm run dev
-#   VITE_API_BASE_URL=http://localhost:8090
+# Railway/Render: deploy `backend-node/` and `frontend/` as separate services from their Dockerfiles.
+# Set backend env vars on the host; for frontend set build arg VITE_API_BASE_URL to the API public URL.
 
 services:
   db:
@@ -30,11 +25,11 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./backend-node
     ports:
-      - "8080:8080"
+      - "8090:8090"
     env_file:
-      - ./backend/.env
+      - ./backend-node/.env
     environment:
       DB_HOST: db
       DB_PORT: 5432
@@ -42,12 +37,9 @@ services:
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_SSL_MODE: disable
-      PORT: 8080
+      PORT: 8090
       FRONTEND_URL: http://localhost:3000
       CORS_ALLOWED_ORIGINS: http://localhost:3000,http://localhost
-      # Local compose: roomy heap/metaspace (no 512Mi cap). Do not omit MaxMetaspaceSize
-      # if you tighten these — Spring/Hibernate startup needs ~128m.
-      JAVA_OPTS: "-Xms128m -Xmx384m -XX:MaxMetaspaceSize=192m -XX:+ExitOnOutOfMemoryError -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8"
     depends_on:
       db:
         condition: service_healthy

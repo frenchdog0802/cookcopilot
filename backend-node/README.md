@@ -4,7 +4,9 @@ NestJS + TypeScript API — **full Spring parity** (default port **8090**).
 
 Same `ApiResponse` / DTO wire shapes so web and mobile switch via env only.
 
-> Port **8081** is commonly used by Expo Metro; Nest defaults to **8090**. Spring stays on **8080** until cutover.
+> Port **8081** is commonly used by Expo Metro; Nest defaults to **8090**.
+
+> **Note:** The Spring Boot `backend/` tree has been removed from this monorepo. Nest is the only API.
 
 Migration tracker: [`tasks/backend-node-migration/`](../tasks/backend-node-migration/)  
 Wave 2 feature doc: [`docs/features/backend-node-wave2-complete.md`](../docs/features/backend-node-wave2-complete.md)

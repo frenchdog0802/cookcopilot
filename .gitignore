@@ -1,5 +1,4 @@
 ﻿# Nested project repos (own GitHub remotes)
-backend/
 frontend/
 mobile/
 .cursor/

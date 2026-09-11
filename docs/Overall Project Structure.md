@@ -3,7 +3,7 @@
 > **Fast onboarding:** Start with [../README.md](../README.md), then [../PROJECT_STATUS.md](../PROJECT_STATUS.md) for gaps and next tasks.  
 > **Last updated:** 2026-07-17
 
-**LarderMind** is a full-stack meal-planning application (brand: LarderMind) with three client surfaces, one static landing page, and one shared Java backend.
+**LarderMind** is a full-stack meal-planning application (brand: LarderMind) with three client surfaces, one static landing page, and **two backends in parallel**: Spring Boot (primary) and NestJS `backend-node/` (Wave 1 migration).
 
 **Branding:** All surfaces = **LarderMind**. Web + landing use Warm Kitchen UI; mobile still uses orange styling (visual alignment pending).
 
@@ -13,7 +13,8 @@
 
 | Path | Purpose |
 |------|---------|
-| `backend/` | Spring Boot REST API (Java 17) |
+| `backend/` | Spring Boot REST API (Java 17) — primary |
+| `backend-node/` | NestJS + Prisma API (TypeScript) — Wave 1 parallel on `:8090` |
 | `frontend/client/` | React + Vite + TypeScript web app |
 | `mobile/` | React Native + Expo mobile app |
 | `landing/` | Static marketing page (`index.html`, `style.css`, `script.js`) |
@@ -23,6 +24,7 @@
 - `backend/src/main/java/com/lardermind/LarderMindApplication.java` — entry point
 - `backend/src/main/resources/application.yml` — config (PostgreSQL, OAuth, OpenAI, Stripe, Cloudinary)
 - `backend/schema.sql` — DB schema + mock seed data
+- `backend-node/` — Nest Wave 1 (auth + core CRUD); see `backend-node/README.md` and `docs/features/backend-node-migration.md`
 
 **Key frontend files:**
 - `frontend/client/src/App.tsx` — view routing (state-based; no React Router in use)
